@@ -1,4 +1,4 @@
-package org.example;
-
-public class SimulationResult {
-}
+//package org.example;
+//
+//public class SimulationResult {
+//}

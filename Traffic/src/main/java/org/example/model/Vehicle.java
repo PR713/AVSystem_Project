@@ -1,31 +1,34 @@
 package org.example.model;
 
-public class Vehicle {
-    private final String vehicleId;
-    private final String startDirection;
-    private final String endDirection;
+import org.example.enums.RoadDirection;
 
-    public Vehicle(String vehicleId, String startDirection, String endDirection) {
-        this.vehicleId = vehicleId;
+public class Vehicle {
+    private final String id;
+    private final RoadDirection startDirection;
+    private final RoadDirection endDirection;
+
+    public Vehicle(String vehicleId, RoadDirection startDirection, RoadDirection endDirection) {
+        this.id = vehicleId;
         this.startDirection = startDirection;
         this.endDirection = endDirection;
     }
 
     public String getVehicleId() {
-        return vehicleId;
+        return id;
     }
 
-    public String getStartDirection() {
+    public RoadDirection getStartDirection() {
         return startDirection;
     }
 
-    public String getEndDirection() {
+    public RoadDirection getEndDirection() {
         return endDirection;
     }
 
+
     @Override
     public String toString() {
-        return "Vehicle: " + vehicleId +
+        return "Vehicle: " + id +
                 "\n, Start Direction: " + startDirection +
                 "\n, End Direction: " + endDirection;
     }

@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.enums.CommandType;
 import org.example.enums.RoadDirection;
@@ -8,6 +9,7 @@ import org.example.model.Command;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +19,13 @@ public class JsonCommandParser {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public static List<Command> parseCommandsFromInput(String input) {
+    public static List<Command> parseCommandsFromInput(String filePath) {
+
+        String input = readFileAsString(filePath);
+
         try {
-            Map<String, List<Map<String, String>>> inputMap = objectMapper.readValue(input, Map.class);
+            Map<String, List<Map<String, String>>> inputMap = objectMapper.readValue(input,
+                                                                    new TypeReference<Map<String, List<Map<String, String>>>>() {});
 
             List<Map<String, String>> commandsMap = inputMap.get("commands");
 
@@ -37,7 +43,7 @@ public class JsonCommandParser {
     }
 
 
-    public static Command mapToCommand(Map<String, String> commandMap) {
+    private static Command mapToCommand(Map<String, String> commandMap) {
         try {
             CommandType commandType = CommandType.fromJsonValue(commandMap.get("type"));
 
@@ -56,9 +62,16 @@ public class JsonCommandParser {
     };
 
 
-    public static String readFileAsString(String filePath) {
+    private static String readFileAsString(String filePath) {
+
+        Path path = Paths.get(filePath);
+
+        if (!Files.exists(path)) {
+            throw new RuntimeException("File does not exist: " + filePath);
+        }
+
         try {
-            return new String(Files.readAllBytes(Paths.get(filePath)));
+            return new String(Files.readAllBytes(path));
         } catch (IOException e) {
             throw new RuntimeException("Failed to read file: " + filePath, e);
         }
