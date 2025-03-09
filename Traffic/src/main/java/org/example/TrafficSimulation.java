@@ -2,8 +2,9 @@ package org.example;
 
 import org.example.enums.CommandType;
 import org.example.model.Command;
-import org.example.model.IntersectionLogic;
+import org.example.model.Intersection;
 import org.example.model.Vehicle;
+import org.example.trafficstrategy.TrafficLightStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +12,11 @@ import java.util.List;
 
 public class TrafficSimulation {
 
-    private final IntersectionLogic intersectionLogic;
+    private final Intersection intersectionLogic;
     private final List<Vehicle> vehiclesThatLeft;
 
-    public TrafficSimulation() {
-        this.intersectionLogic = new IntersectionLogic();
+    public TrafficSimulation(TrafficLightStrategy trafficLightStrategy) {
+        this.intersectionLogic = new Intersection(trafficLightStrategy);
         this.vehiclesThatLeft = new ArrayList<>();
     }
 
@@ -31,7 +32,7 @@ public class TrafficSimulation {
             }
         }
 
-        //zapis?
+        //TODO zapis?
 
     }
 }
