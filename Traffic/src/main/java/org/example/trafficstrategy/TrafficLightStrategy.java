@@ -1,13 +1,13 @@
 package org.example.trafficstrategy;
 
 import org.example.enums.RoadDirection;
-import org.example.model.TrafficLight;
+import org.example.model.TrafficLights;
 
 import java.util.Map;
 
 public interface TrafficLightStrategy {
 
-    void updateCurrentCycleStep(Map<RoadDirection, Integer> vehicleQueue);
+    void updateCurrentCycleStep(Map<RoadDirection, Integer> vehicleQueue, TrafficLights trafficLights);
 
-    void makeMove(TrafficLight trafficLight);
+    void makeMove(TrafficLights trafficLights);
 }
