@@ -39,21 +39,36 @@ public class Intersection {
 
     public void step() {
         //TODO invokes a managing method from given trafficLightStrategy
-        boolean flag = false;
 
         for (List<Vehicle> list : waitingVehicles.values()) {
             if (!list.isEmpty()) {
-                flag = true;
+                updateLights();
                 break;
             }
         }
 
-        if (flag) {
-            trafficLightStrategy.getGreenLights(numOfVehiclesPerDirection);
-        }
+        //peewnie pobrać aktualnie zielone, może dodać w TrafficLight metodę getGreen lights
+        //dla fixed zwraca 1 kierunek, dla most crowded też a proporcji może 2 np? idk
+
     }
 
+    private void updateLights() {
+        new Thread(() -> {
+            try {
+                trafficLightStrategy.updateCurrentCycleStep(numOfVehiclesPerDirection);
+
+                for (int i = 0; i < 2; i++ ){
+                    trafficLightStrategy.makeMove(trafficLight);
+                    Thread.sleep(1000);
+                } //every cycle of trafficLights changes light in 2 steps
+
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }).start();
+    }
 
     //public theMostCrowded
     //TODO np pojedyncze drogi priorytetowane, albo pary a potem proporcje może :)
+    //TODO ewentualnie abstract Intersection z tymi metodami a potem IntersectionFixedCycle i IntersectionMostCrowded
 }

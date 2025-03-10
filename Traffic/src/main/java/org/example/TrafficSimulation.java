@@ -12,11 +12,11 @@ import java.util.List;
 
 public class TrafficSimulation {
 
-    private final Intersection intersectionLogic;
+    private final Intersection intersection;
     private final List<Vehicle> vehiclesThatLeft;
 
     public TrafficSimulation(TrafficLightStrategy trafficLightStrategy) {
-        this.intersectionLogic = new Intersection(trafficLightStrategy);
+        this.intersection = new Intersection(trafficLightStrategy);
         this.vehiclesThatLeft = new ArrayList<>();
     }
 
@@ -25,14 +25,16 @@ public class TrafficSimulation {
             if (command.type() == CommandType.ADD_VEHICLE) {
                 Vehicle vehicle = new Vehicle(command.vehicleId(), command.startDirection(),
                                             command.endDirection());
-                intersectionLogic.addVehicle(vehicle);
+                intersection.addVehicle(vehicle);
 
             } else if (command.type() == CommandType.STEP) {
-                intersectionLogic.step();
+                intersection.step();
             }
+            //TODO zapis?
+            //TODO draw() co np 500ms
         }
 
-        //TODO zapis?
+
 
     }
 }

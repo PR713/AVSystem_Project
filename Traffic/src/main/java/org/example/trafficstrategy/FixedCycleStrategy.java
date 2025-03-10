@@ -1,53 +1,50 @@
 package org.example.trafficstrategy;
 
 import org.example.enums.RoadDirection;
+import org.example.enums.TrafficLightState;
+import org.example.model.TrafficLight;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class FixedCycleStrategy implements TrafficLightStrategy{
 
     private int currentCycleStep = 0;
+    private RoadDirection directionFixed;
+
+    public void updateCurrentCycleStep(Map<RoadDirection, Integer> vehicleQueue) {
+        //skip if there are no cars on the road... next light
+        for (int i = currentCycleStep; i <= currentCycleStep + 3; i++) {
+            if (vehicleQueue.get(RoadDirection.fromNumericValue(i % 4)) > 0) {
+                currentCycleStep = i % 4;
+                break;
+            }
+        } //for sure if we invoke that method there exists index 'i' that meets the condition
+
+        directionFixed = RoadDirection.fromNumericValue(currentCycleStep);
+    }
+
 
     @Override
-    public Map<RoadDirection, Boolean> getGreenLights(Map<RoadDirection, Integer> vehicleQueue) {
+    public void makeMove(TrafficLight trafficLight) {
 
-        Map<RoadDirection, Boolean> greenLights = new HashMap<>();
-        //skip if there are no cars on the road.. next light
-        for (int i = currentCycleStep; i <= currentCycleStep + 3; i++) {
-            if (vehicleQueue.get(RoadDirection.fromNumericValue(i)) > 0) {
-                currentCycleStep = i;
+        for (RoadDirection direction : RoadDirection.values()) {
+            TrafficLightState currentState = trafficLight.getState(direction);
+
+            switch (currentState) {
+                case GREEN -> trafficLight.changeState(direction, TrafficLightState.YELLOW);
+                case YELLOW -> trafficLight.changeState(direction, TrafficLightState.RED);
+                case RED -> {
+                    if (direction == directionFixed) {
+                        trafficLight.changeState(direction, TrafficLightState.RED_YELLOW);
+                    }
+                }
+                case RED_YELLOW -> trafficLight.changeState(direction, TrafficLightState.GREEN);
+
             }
         }
+    }
 
-        switch (currentCycleStep) {
-            case 0:
-                greenLights.put(RoadDirection.NORTH, true);
-                greenLights.put(RoadDirection.SOUTH, false);
-                greenLights.put(RoadDirection.EAST, false);
-                greenLights.put(RoadDirection.WEST, false);
-                break;
-            case 1:
-                greenLights.put(RoadDirection.NORTH, false);
-                greenLights.put(RoadDirection.SOUTH, true);
-                greenLights.put(RoadDirection.EAST, false);
-                greenLights.put(RoadDirection.WEST, false);
-                break;
-            case 2:
-                greenLights.put(RoadDirection.NORTH, false);
-                greenLights.put(RoadDirection.SOUTH, false);
-                greenLights.put(RoadDirection.EAST, true);
-                greenLights.put(RoadDirection.WEST, false);
-                break;
-            case 3:
-                greenLights.put(RoadDirection.NORTH, false);
-                greenLights.put(RoadDirection.SOUTH, false);
-                greenLights.put(RoadDirection.EAST, false);
-                greenLights.put(RoadDirection.WEST, true);
-                break;
-        }
-
-
-        return greenLights;
+    public RoadDirection getDirectionFixed() {
+        return directionFixed;
     }
 }
