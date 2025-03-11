@@ -8,6 +8,7 @@ import java.util.List;
 
 public class SimulationResult {
     private final List<StepStatus> stepStatuses;
+    public static String outputFilePath;
 
     public SimulationResult() {
         this.stepStatuses = new ArrayList<>();
