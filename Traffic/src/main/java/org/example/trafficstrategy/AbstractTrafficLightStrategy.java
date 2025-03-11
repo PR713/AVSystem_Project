@@ -10,7 +10,7 @@ public abstract class AbstractTrafficLightStrategy implements TrafficLightStrate
     protected RoadDirection directionFixed;
 
     @Override
-    public void makeMove(TrafficLights trafficLights) {
+    public void switchLights(TrafficLights trafficLights) {
 
         for (RoadDirection direction : RoadDirection.values()) {
             TrafficLightState currentState = trafficLights.getState(direction);

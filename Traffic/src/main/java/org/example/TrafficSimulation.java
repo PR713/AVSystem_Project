@@ -6,18 +6,17 @@ import org.example.model.Intersection;
 import org.example.model.Vehicle;
 import org.example.trafficstrategy.TrafficLightStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.CountDownLatch;
 
 public class TrafficSimulation {
 
     private final Intersection intersection;
-    private final List<Vehicle> vehiclesThatLeft;
+    private final SimulationResult simulationResult;
 
     public TrafficSimulation(TrafficLightStrategy trafficLightStrategy) {
         this.intersection = new Intersection(trafficLightStrategy);
-        this.vehiclesThatLeft = new ArrayList<>();
+        this.simulationResult = new SimulationResult();
     }
 
     public void executeCommands(List<Command> commands) {
@@ -26,15 +25,23 @@ public class TrafficSimulation {
                 Vehicle vehicle = new Vehicle(command.vehicleId(), command.startDirection(),
                                             command.endDirection());
                 intersection.addVehicle(vehicle);
-
             } else if (command.type() == CommandType.STEP) {
-                intersection.step();
+                CountDownLatch latch = new CountDownLatch(1);
+                intersection.step(latch);
+                try {
+                    latch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                simulationResult.add(new StepStatus(intersection.getVehiclesThatLeftInStep()));
+                intersection.resetVehiclesThatLeftInStep();
             }
-            //TODO zapis?
             //TODO draw() co np 500ms
         }
 
+        intersection.shutdown();
 
-
+        simulationResult.saveResultsToFile("src/main/resources/output.json");
     }
 }

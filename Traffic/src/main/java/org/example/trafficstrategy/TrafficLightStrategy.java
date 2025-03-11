@@ -9,5 +9,5 @@ public interface TrafficLightStrategy {
 
     void updateCurrentCycleStep(Map<RoadDirection, Integer> vehicleQueue, TrafficLights trafficLights);
 
-    void makeMove(TrafficLights trafficLights);
+    void switchLights(TrafficLights trafficLights);
 }

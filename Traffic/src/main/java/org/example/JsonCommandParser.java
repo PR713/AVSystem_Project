@@ -25,7 +25,7 @@ public class JsonCommandParser {
 
         try {
             Map<String, List<Map<String, String>>> inputMap = objectMapper.readValue(input,
-                                                                    new TypeReference<Map<String, List<Map<String, String>>>>() {});
+                                                                    new TypeReference<>() {});
 
             List<Map<String, String>> commandsMap = inputMap.get("commands");
 

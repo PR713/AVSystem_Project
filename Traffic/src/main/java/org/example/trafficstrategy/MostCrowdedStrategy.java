@@ -1,12 +1,17 @@
-//package org.example.trafficstrategy;
-//
-//import org.example.enums.RoadDirection;
-//
-//import java.util.Map;
-//
-//public class MostCrowdedStrategy implements TrafficLightStrategy {
-//    @Override
-//    public void makeMove(Map<RoadDirection, Integer> vehicleQueue) {
-//        return Map.of();
-//    }
-//}
+package org.example.trafficstrategy;
+
+import org.example.enums.RoadDirection;
+import org.example.model.TrafficLights;
+
+import java.util.Map;
+
+public class MostCrowdedStrategy extends AbstractTrafficLightStrategy {
+
+
+
+    @Override
+    public void updateCurrentCycleStep(Map<RoadDirection, Integer> vehicleQueue, TrafficLights trafficLights) {
+        //basis on traffic intensity
+    }
+}
+
