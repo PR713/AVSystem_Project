@@ -4,6 +4,7 @@ import org.example.enums.RoadDirection;
 import org.example.enums.TrafficLightState;
 import org.example.model.TrafficLights;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,22 +28,30 @@ public abstract class AbstractTrafficLightStrategy implements TrafficLightStrate
 
     protected static final Map<RoadDirection, List<RoadDirection>> ADJACENT_PAIRS1 = Map.of(
             RoadDirection.NORTH, List.of(RoadDirection.WEST, RoadDirection.SOUTH, RoadDirection.EAST),
-            RoadDirection.EAST, List.of(RoadDirection.NORTH)
+            RoadDirection.EAST, List.of(RoadDirection.NORTH),
+            RoadDirection.WEST, List.of(),
+            RoadDirection.SOUTH, List.of()
     );
 
     protected static final Map<RoadDirection, List<RoadDirection>> ADJACENT_PAIRS2 = Map.of(
             RoadDirection.SOUTH, List.of(RoadDirection.WEST, RoadDirection.NORTH, RoadDirection.EAST),
-            RoadDirection.WEST, List.of(RoadDirection.SOUTH)
+            RoadDirection.WEST, List.of(RoadDirection.SOUTH),
+            RoadDirection.EAST, List.of(),
+            RoadDirection.NORTH, List.of()
     );
 
     protected static final Map<RoadDirection, List<RoadDirection>> ADJACENT_PAIRS3 = Map.of(
             RoadDirection.NORTH, List.of(RoadDirection.WEST),
-            RoadDirection.WEST, List.of(RoadDirection.SOUTH, RoadDirection.NORTH, RoadDirection.EAST)
+            RoadDirection.WEST, List.of(RoadDirection.SOUTH, RoadDirection.NORTH, RoadDirection.EAST),
+            RoadDirection.EAST, List.of(),
+            RoadDirection.SOUTH, List.of()
     );
 
     protected static final Map<RoadDirection, List<RoadDirection>> ADJACENT_PAIRS4 = Map.of(
             RoadDirection.SOUTH, List.of(RoadDirection.EAST),
-            RoadDirection.EAST, List.of(RoadDirection.NORTH, RoadDirection.SOUTH, RoadDirection.WEST)
+            RoadDirection.EAST, List.of(RoadDirection.NORTH, RoadDirection.SOUTH, RoadDirection.WEST),
+            RoadDirection.WEST, List.of(),
+            RoadDirection.NORTH, List.of()
     );
 
 
@@ -92,6 +101,16 @@ public abstract class AbstractTrafficLightStrategy implements TrafficLightStrate
             return List.of(dirVehicle1, dirVehicle2);
         }
         return List.of();
+    }
+
+    @Override
+    public void updateGreenLightDirections(Map<RoadDirection, Integer> vehiclesQueue){
+        this.greenLightDirections = new ArrayList<>();
+        for (int i = 0; i <= 3; i++) {
+            if (vehiclesQueue.get(RoadDirection.fromNumericValue(i)) > 0) {
+                this.greenLightDirections.add(RoadDirection.fromNumericValue(i));
+            }
+        } //for sure if we invoke that method there exists index 'i' that meets the condition
     }
 
     public List<RoadDirection> getGreenLightDirections() {

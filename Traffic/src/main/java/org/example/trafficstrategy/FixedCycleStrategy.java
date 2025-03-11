@@ -4,7 +4,6 @@ import org.example.enums.RoadDirection;
 import org.example.model.TrafficLights;
 import org.example.model.Vehicle;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
@@ -17,16 +16,11 @@ public class FixedCycleStrategy extends AbstractTrafficLightStrategy {
     }
 
     @Override
-    public void nextCycleStep(Map<RoadDirection, Integer> vehicleQueue, Map<RoadDirection, List<Vehicle>> waitingVehicles, TrafficLights trafficLights, ScheduledExecutorService scheduler) {
-        //skip if there are no cars on the road... next light
-        this.greenLightDirections = new ArrayList<>();
-        for (int i = 0; i <= 3; i++) {
-            if (vehicleQueue.get(RoadDirection.fromNumericValue(i)) > 0) {
-                this.greenLightDirections.add(RoadDirection.fromNumericValue(i));
-            }
-        } //for sure if we invoke that method there exists index 'i' that meets the condition
+    public void nextCycleStep(Map<RoadDirection, Integer> vehiclesQueue, Map<RoadDirection, List<Vehicle>> waitingVehicles, TrafficLights trafficLights, ScheduledExecutorService scheduler) {
 
-        this.greenLightDirections = chooseRoadsToBeOn(greenLightDirections, waitingVehicles);
+        super.updateGreenLightDirections(vehiclesQueue);
+
+        this.greenLightDirections = chooseRoadsToBeOn(this.greenLightDirections, waitingVehicles);
 
         scheduler.schedule(() -> {
             for (int i = 0; i < 2; i++) {

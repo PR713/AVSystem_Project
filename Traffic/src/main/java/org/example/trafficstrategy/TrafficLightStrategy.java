@@ -17,5 +17,7 @@ public interface TrafficLightStrategy {
     List<RoadDirection> validateCollision(int sum, RoadDirection dirVehicle1, RoadDirection dirVehicle2,
                                           RoadDirection destinationVehicle1, RoadDirection destinationVehicle2);
 
+    void updateGreenLightDirections(Map<RoadDirection, Integer> vehiclesQueue);
+
     List<RoadDirection> getGreenLightDirections();
 }
