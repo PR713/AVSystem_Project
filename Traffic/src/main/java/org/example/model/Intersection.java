@@ -58,8 +58,7 @@ public class Intersection {
         }
 
         trafficLightStrategy.nextCycleStep(numOfVehiclesPerDirection, waitingVehicles, trafficLights, scheduler);
-        List<RoadDirection> directionsWithGreenLight = trafficLights.getDirectionsFixed();
-        // // // // // // // // //TODO TODOsssss
+        List<RoadDirection> directionsWithGreenLight = trafficLightStrategy.getGreenLightDirections();
 
         scheduler.schedule(() -> {
             try {

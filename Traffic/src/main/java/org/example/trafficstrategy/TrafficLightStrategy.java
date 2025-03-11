@@ -13,4 +13,9 @@ public interface TrafficLightStrategy {
     void nextCycleStep(Map<RoadDirection, Integer> vehicleQueue, Map<RoadDirection, List<Vehicle>> waitingVehicles, TrafficLights trafficLights, ScheduledExecutorService scheduler);
 
     void switchLights(TrafficLights trafficLights);
+
+    List<RoadDirection> validateCollision(int sum, RoadDirection dirVehicle1, RoadDirection dirVehicle2,
+                                          RoadDirection destinationVehicle1, RoadDirection destinationVehicle2);
+
+    List<RoadDirection> getGreenLightDirections();
 }

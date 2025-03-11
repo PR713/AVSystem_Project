@@ -10,7 +10,6 @@ import java.util.Map;
 public class TrafficLights {
 
     private final Map<RoadDirection, TrafficLightState> states;
-    private List<RoadDirection> fixedDirections;
 
     public TrafficLights() {
         this.states = new HashMap<>();
@@ -27,13 +26,5 @@ public class TrafficLights {
 
     public void changeState(RoadDirection direction, TrafficLightState newState) {
         states.put(direction, newState);
-    }
-
-    public void setDirectionsFixed(List<RoadDirection> directions) {
-        this.fixedDirections = directions;
-    }
-
-    public List<RoadDirection> getDirectionsFixed(){
-        return fixedDirections;
     }
 }
