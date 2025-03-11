@@ -5,9 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class ScheduleProvider {
 
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
     public static ScheduledExecutorService getScheduler() {
-        return scheduler;
+        return Executors.newScheduledThreadPool(1);
     }
 }

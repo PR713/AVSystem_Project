@@ -18,11 +18,10 @@ public class SimulationResult {
         stepStatuses.add(stepStatus);
     }
 
-    public void saveResultsToFile(String filePath) {
+    public void saveResultsToFile() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), this);
-            System.out.println("Wyniki zapisane do pliku: " + filePath);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(outputFilePath), this);
         } catch (Exception e) {
             e.printStackTrace();
         }

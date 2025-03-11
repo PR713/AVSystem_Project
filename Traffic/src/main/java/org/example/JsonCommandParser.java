@@ -23,6 +23,11 @@ public class JsonCommandParser {
 
         String input = readFileAsString(filePath);
 
+        if (input.isEmpty()) {
+            throw new CommandParsingException("File is empty");
+        }
+
+
         try {
             Map<String, List<Map<String, String>>> inputMap = objectMapper.readValue(input,
                                                                     new TypeReference<>() {});

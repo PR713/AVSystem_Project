@@ -36,11 +36,10 @@ public class TrafficSimulation {
                 simulationResult.add(new StepStatus(intersection.getVehiclesThatLeftInStep()));
                 intersection.resetVehiclesThatLeftInStep();
             }
-            //TODO draw() co np 500ms
         }
 
         intersection.shutdown();
 
-        simulationResult.saveResultsToFile("src/main/resources/output.json");
+        simulationResult.saveResultsToFile();
     }
 }

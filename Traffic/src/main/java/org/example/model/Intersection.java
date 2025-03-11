@@ -4,10 +4,7 @@ import org.example.enums.RoadDirection;
 import org.example.model.utils.ScheduleProvider;
 import org.example.trafficstrategy.TrafficLightStrategy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
@@ -103,5 +100,9 @@ public class Intersection {
 
     public void resetVehiclesThatLeftInStep() {
         vehiclesThatLeftInStep.clear();
+    }
+
+    public Map<RoadDirection, List<Vehicle>> getWaitingVehicles() {
+        return Collections.unmodifiableMap(waitingVehicles);
     }
 }

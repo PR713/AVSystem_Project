@@ -1,0 +1,13 @@
+{
+  "commands": [
+    {
+      "type": "addVehicle",
+      "vehicleId": "vehicle1",
+      "startRoad": "south",
+      "endRoad": "north"
+    },
+    {
+      "type": "step"
+    }
+  ]
+}
