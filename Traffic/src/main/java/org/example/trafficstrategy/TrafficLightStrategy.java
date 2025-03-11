@@ -2,12 +2,15 @@ package org.example.trafficstrategy;
 
 import org.example.enums.RoadDirection;
 import org.example.model.TrafficLights;
+import org.example.model.Vehicle;
 
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
 
 public interface TrafficLightStrategy {
 
-    void updateCurrentCycleStep(Map<RoadDirection, Integer> vehicleQueue, TrafficLights trafficLights);
+    void nextCycleStep(Map<RoadDirection, Integer> vehicleQueue, Map<RoadDirection, List<Vehicle>> waitingVehicles, TrafficLights trafficLights, ScheduledExecutorService scheduler);
 
     void switchLights(TrafficLights trafficLights);
 }

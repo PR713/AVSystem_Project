@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.enums.RoadDirection;
+import org.example.model.utils.ScheduleProvider;
 import org.example.trafficstrategy.TrafficLightStrategy;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Intersection {
         this.waitingVehicles = new HashMap<>();
         this.numOfVehiclesPerDirection = new HashMap<>();
         this.trafficLightStrategy = trafficLightStrategy;
-        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.scheduler = ScheduleProvider.getScheduler();
 
         for (RoadDirection direction : RoadDirection.values()) {
             waitingVehicles.put(direction, new ArrayList<>());
@@ -46,7 +47,6 @@ public class Intersection {
         boolean flagAreVehicles = false;
         for (List<Vehicle> list : waitingVehicles.values()) {
             if (!list.isEmpty()) {
-                updateLights();
                 flagAreVehicles = true;
                 break;
             }
@@ -57,23 +57,23 @@ public class Intersection {
             return;
         }
 
-        trafficLightStrategy.updateCurrentCycleStep(numOfVehiclesPerDirection, trafficLights);
-        RoadDirection directionWithGreenLight = trafficLights.getDirectionFixed();
+        trafficLightStrategy.nextCycleStep(numOfVehiclesPerDirection, waitingVehicles, trafficLights, scheduler);
+        List<RoadDirection> directionsWithGreenLight = trafficLights.getDirectionsFixed();
+        // // // // // // // // //TODO TODOsssss
 
         scheduler.schedule(() -> {
             try {
-                List<Vehicle> vehiclesOnGreenLight = waitingVehicles.get(directionWithGreenLight);
+                for (RoadDirection direction : directionsWithGreenLight) {
+                    List<Vehicle> vehiclesOnGreenLight = waitingVehicles.get(direction);
 
-                int timerToSwitchLights = 5;
-                while (!vehiclesOnGreenLight.isEmpty() && timerToSwitchLights > 0 ) {
-                    Vehicle vehicle = vehiclesOnGreenLight.removeFirst();
-                    vehiclesThatLeftInStep.add(vehicle);
-                    numOfVehiclesPerDirection.put(vehicle.getStartDirection(), numOfVehiclesPerDirection.get(vehicle.getStartDirection()) - 1);
-                    Thread.sleep(500);
-                    timerToSwitchLights--;
+                    if (!vehiclesOnGreenLight.isEmpty()) {
+                        Vehicle vehicle = vehiclesOnGreenLight.removeFirst();
+                        vehiclesThatLeftInStep.add(vehicle);
+                        numOfVehiclesPerDirection.put(vehicle.getStartDirection(), numOfVehiclesPerDirection.get(vehicle.getStartDirection()) - 1);
+
+                    }
                 }
-
-                updateLights();
+                Thread.sleep(500);
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -81,22 +81,6 @@ public class Intersection {
                 latch.countDown();
             }
         }, 500, TimeUnit.MILLISECONDS);
-
-    }
-
-
-    private void updateLights() {
-        scheduler.schedule(() -> {
-            for (int i = 0; i < 2; i++) {
-                trafficLightStrategy.switchLights(trafficLights);
-
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-        }, 1, TimeUnit.SECONDS);
     }
 
 

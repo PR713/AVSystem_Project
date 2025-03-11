@@ -1,11 +1,11 @@
 {
   "stepStatuses" : [ {
-    "leftVehicles" : [ "vehicle1" ]
-  }, {
-    "leftVehicles" : [ "vehicle2" ]
-  }, {
-    "leftVehicles" : [ "vehicle3", "vehicle4" ]
+    "leftVehicles" : [ "vehicle2", "vehicle1" ]
   }, {
     "leftVehicles" : [ ]
+  }, {
+    "leftVehicles" : [ "vehicle3" ]
+  }, {
+    "leftVehicles" : [ "vehicle4" ]
   } ]
 }

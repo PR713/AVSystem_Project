@@ -33,7 +33,6 @@ public class TrafficSimulation {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 simulationResult.add(new StepStatus(intersection.getVehiclesThatLeftInStep()));
                 intersection.resetVehiclesThatLeftInStep();
             }

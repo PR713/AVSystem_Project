@@ -4,10 +4,11 @@ import org.example.enums.RoadDirection;
 import org.example.enums.TrafficLightState;
 import org.example.model.TrafficLights;
 
+import java.util.List;
+
 public abstract class AbstractTrafficLightStrategy implements TrafficLightStrategy {
 
-    protected int currentCycleStep = 0;
-    protected RoadDirection directionFixed;
+    protected List<RoadDirection> fixedDirections;
 
     @Override
     public void switchLights(TrafficLights trafficLights) {
@@ -16,10 +17,14 @@ public abstract class AbstractTrafficLightStrategy implements TrafficLightStrate
             TrafficLightState currentState = trafficLights.getState(direction);
 
             switch (currentState) {
-                case GREEN -> trafficLights.changeState(direction, TrafficLightState.YELLOW);
+                case GREEN -> {
+                    if (!fixedDirections.contains(direction)){
+                        trafficLights.changeState(direction, TrafficLightState.YELLOW);
+                    }
+                }
                 case YELLOW -> trafficLights.changeState(direction, TrafficLightState.RED);
                 case RED -> {
-                    if (direction == directionFixed) {
+                    if (fixedDirections.contains(direction)) {
                         trafficLights.changeState(direction, TrafficLightState.RED_YELLOW);
                     }
                 }

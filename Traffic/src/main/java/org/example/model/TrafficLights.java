@@ -4,12 +4,13 @@ import org.example.enums.RoadDirection;
 import org.example.enums.TrafficLightState;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TrafficLights {
 
     private final Map<RoadDirection, TrafficLightState> states;
-    private RoadDirection directionFixed;
+    private List<RoadDirection> fixedDirections;
 
     public TrafficLights() {
         this.states = new HashMap<>();
@@ -28,11 +29,11 @@ public class TrafficLights {
         states.put(direction, newState);
     }
 
-    public void setDirectionFixed(RoadDirection direction) {
-        this.directionFixed = direction;
+    public void setDirectionsFixed(List<RoadDirection> directions) {
+        this.fixedDirections = directions;
     }
 
-    public RoadDirection getDirectionFixed(){
-        return directionFixed;
+    public List<RoadDirection> getDirectionsFixed(){
+        return fixedDirections;
     }
 }
