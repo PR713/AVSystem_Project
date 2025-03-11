@@ -62,7 +62,7 @@ Projekt symuluje ruch drogowy na skrzyżowaniu z sygnalizacją świetlną. Syste
 
 1. Sklonuj repozytorium:
 ```bash
-   git clone https://github.com/PR713/AVSystem_Project
+git clone https://github.com/PR713/AVSystem_Project
 ```
 
 2. W terminalu uruchom polecenie:
