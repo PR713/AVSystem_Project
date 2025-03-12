@@ -40,7 +40,7 @@ Projekt symuluje ruch drogowy na skrzyżowaniu z sygnalizacją świetlną. Syste
 1. **Niskie natężenie ruchu**: System efektywnie zarządza pojazdami, minimalizując czas oczekiwania (strategia czasu oczekiwania).
 2. **Wysokie natężenie ruchu**: System priorytetyzuje kierunki z największym natężeniem ruchu, aby zminimalizować korki (strategia czasu oczekiwania).
 3. **Równoważne natężenie ruchu na wszystkich kierunkach**: System równomiernie rozdziela czas zielonego światła, aby zapewnić sprawiedliwe przejazdy (strategia czasu oczekiwania).
-4. **Maksymalizacja liczby pojazdów**, które w danym kroku mogą opuścić skrzyżowanie (sąsiadujące drogi, różne możliwości) (obie strategie).
+4. **Maksymalizacja liczby pojazdów**, które w danym kroku mogą opuścić skrzyżowanie (np. pojazdy z sąsiadujących dróg, a nie tylko z naprzeciwka itp.) (obie strategie).
 
 ## Organizacja Kodu
 
